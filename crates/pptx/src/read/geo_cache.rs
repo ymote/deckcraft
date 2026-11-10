@@ -55,7 +55,7 @@ fn complete_xml(xml: &[u8]) -> bool {
                 let Some(next) = depth.checked_sub(1) else { return false };
                 depth = next;
             }
-            Ok(Event::Text(t)) if depth == 0 && !t.as_ref().iter().all(u8::is_ascii_whitespace) => return false,
+            Ok(Event::Text(t)) if depth == 0 && !t.iter().all(u8::is_ascii_whitespace) => return false,
             Ok(Event::DocType(_)) | Err(_) => return false,
             Ok(Event::Eof) => return depth == 0 && roots == 1,
             _ => (),

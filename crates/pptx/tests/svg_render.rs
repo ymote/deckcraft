@@ -63,7 +63,7 @@ fn extension_only_svg_imports_without_a_raster_reference() {
     let mut out = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
     for i in 0..zip.len() {
         let mut file = zip.by_index(i).unwrap();
-        let name = file.name().to_string();
+        let name = file.name().unwrap().to_string();
         let mut data = Vec::new();
         file.read_to_end(&mut data).unwrap();
         if name == "ppt/slides/slide1.xml" {

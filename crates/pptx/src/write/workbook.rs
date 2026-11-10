@@ -130,7 +130,7 @@ fn unzip(bytes: &[u8]) -> Option<BTreeMap<String, (String, Vec<u8>)>> {
         if f.is_dir() {
             continue;
         }
-        let name = f.name().to_string();
+        let name = f.name().ok()?.into_owned();
         let key = opc::norm(&name);
         if name.starts_with('/') || key.split('/').any(|p| matches!(p, "" | "." | "..")) || key.starts_with("_xmlsignatures/") {
             return None;

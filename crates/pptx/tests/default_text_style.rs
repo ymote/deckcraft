@@ -11,7 +11,7 @@ fn default_paragraph_language_and_format_inherit_into_each_level() {
         let mut file = source.by_index(i).expect("part");
         let mut bytes = vec![];
         file.read_to_end(&mut bytes).expect("read");
-        if file.name() == "ppt/presentation.xml" {
+        if file.name().unwrap() == "ppt/presentation.xml" {
             let xml = String::from_utf8(bytes).expect("xml");
             let start = xml.find("<p:defaultTextStyle").expect("default style");
             let end = xml[start..].find("</p:defaultTextStyle>").expect("end") + start + "</p:defaultTextStyle>".len();
@@ -22,7 +22,7 @@ fn default_paragraph_language_and_format_inherit_into_each_level() {
             </p:defaultTextStyle>"#;
             bytes = format!("{}{style}{}", &xml[..start], &xml[end..]).into_bytes();
         }
-        out.start_file(file.name(), zip::write::SimpleFileOptions::default()).expect("part");
+        out.start_file(file.name().unwrap(), zip::write::SimpleFileOptions::default()).expect("part");
         out.write_all(&bytes).expect("write");
     }
     let p = deckcraft_pptx::import(&out.finish().expect("zip").into_inner()).expect("import");

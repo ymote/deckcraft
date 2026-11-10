@@ -182,7 +182,7 @@ fn chartex_scalar_elements_use_native_office_attribute_encoding() {
         let mut found = false;
         for i in 0..z.len() {
             let mut entry = z.by_index(i).unwrap();
-            if !entry.name().contains("chartEx") || !entry.name().ends_with(".xml") {
+            if !entry.name().unwrap().contains("chartEx") || !entry.name().unwrap().ends_with(".xml") {
                 continue;
             }
             let mut b = Vec::new();

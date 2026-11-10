@@ -425,7 +425,7 @@ fn compressed_geographic_cache_matches_clear_geometry_and_render_after_rebuild()
                 bytes = format!("{}<cx:binary>{}</cx:binary>{}", &xml[..start], STANDARD.encode(compressed), &xml[end..]).into_bytes();
                 replaced = true;
             }
-            output.start_file(f.name(), zip::write::SimpleFileOptions::default()).unwrap();
+            output.start_file(f.name().unwrap(), zip::write::SimpleFileOptions::default()).unwrap();
             output.write_all(&bytes).unwrap();
         }
         assert!(replaced);
@@ -544,7 +544,7 @@ fn advisory_geographic_counts_preserve_holes_through_import_and_forced_rebuild()
                 part = xml.replace("numPoints=\"10\"", &format!("numPoints=\"{declared}\"")).into_bytes();
                 replaced = true;
             }
-            output.start_file(f.name(), zip::write::SimpleFileOptions::default()).unwrap();
+            output.start_file(f.name().unwrap(), zip::write::SimpleFileOptions::default()).unwrap();
             output.write_all(&part).unwrap();
         }
         assert!(replaced);

@@ -14,7 +14,7 @@ fn files(bytes: &[u8]) -> Vec<(String, Vec<u8>)> {
             let mut f = zip.by_index(i).unwrap();
             let mut v = vec![];
             f.read_to_end(&mut v).unwrap();
-            (f.name().into(), v)
+            (f.name().unwrap().into(), v)
         })
         .collect()
 }

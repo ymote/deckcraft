@@ -70,7 +70,11 @@ impl Package {
             if f.is_dir() {
                 continue;
             }
-            let name = f.name().trim_start_matches('/').to_string();
+            let Ok(name) = f.name() else {
+                log::warn!("pptx: skipping part with an unreadable name");
+                continue;
+            };
+            let name = name.trim_start_matches('/').to_string();
             let declared = f.size();
             if declared > max_part {
                 log::warn!("pptx: skipping oversized part {name} ({declared} bytes)");
